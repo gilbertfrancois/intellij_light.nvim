@@ -68,7 +68,7 @@ function M.setup()
 			search_fg = "#444444",
 			-- search_bg = "#ffff5f",
 			search_bg = "#fcd47e",
-			incsearch_bg = "#edebfc",
+			incsearch_bg = "#ffcdff",
 			cursearch_bg = "#a6d3ff",
 
 			folded_fg = "#0087af",
