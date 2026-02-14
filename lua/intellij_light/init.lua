@@ -71,8 +71,10 @@ function M.setup()
 			incsearch_bg = "#ffcdff",
 			cursearch_bg = "#a6d3ff",
 
-			folded_fg = "#0087af",
-			folded_bg = "#afd7ff",
+			-- folded_fg = "#0087af",
+			-- folded_bg = "#afd7ff",
+			folded_fg = "#414d41",
+			folded_bg = "#e9f5e6",
 
 			cursorline_bg = "#f5f8fe",
 			cursorcolumn_bg = "#f5f8fe",
