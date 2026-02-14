@@ -353,7 +353,6 @@ function M.setup()
 		["@comment.documentation"] = { fg = colors.jet.comment, italic = true },
 
 		["@string"] = { link = "String" },
-		-- FIX: docstrings/doc text are grey in PyCharm Light (DEFAULT_DOC_COMMENT)
 		["@string.documentation"] = { fg = colors.jet.comment, italic = true },
 		["@string.escape"] = { fg = colors.jet.attr },
 		["@string.special"] = { fg = colors.jet.attr },
@@ -364,9 +363,7 @@ function M.setup()
 
 		-- Identifiers
 		["@variable"] = { fg = colors.jet.text },
-		["@variable.builtin"] = { fg = colors.jet.constant, italic = true },
-
-		-- FIX: parameters in function definitions should look like normal text (PyCharm Light)
+		["@variable.builtin"] = { fg = colors.jet.constant },
 		["@variable.parameter"] = { fg = colors.jet.text },
 		["@parameter"] = { fg = colors.jet.text },
 
@@ -415,7 +412,7 @@ function M.setup()
 
 		["@type"] = { fg = colors.jet.keyword },
 		["@type.builtin"] = { fg = colors.jet.keyword },
-		["@type.definition"] = { fg = colors.jet.keyword },
+		["@type.definition"] = { fg = colors.jet.text },
 
 		-- Attributes / decorators / annotations
 		["@attribute"] = { fg = colors.jet.attr },
