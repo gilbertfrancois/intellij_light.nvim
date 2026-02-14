@@ -47,7 +47,7 @@ function M.setup()
 		--------------------------------------------------------------------------
 		ui = {
 			surface = "#ffffff", -- NormalFloat / Pmenu background
-			surface_nc = "#fbfbfb", -- NormalNC background
+			surface_nc = "#ffffff", -- NormalNC background
 			subtle = "#f5f8fe", -- CursorLine & CursorColumn
 			border = "#d4d4d4", -- FloatBorder, Blink borders, WinSeparator/VertSplit
 			status_fg = "#e0e0e0",
