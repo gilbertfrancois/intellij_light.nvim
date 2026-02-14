@@ -47,7 +47,7 @@ function M.setup()
 		--------------------------------------------------------------------------
 		ui = {
 			surface = "#ffffff", -- NormalFloat / Pmenu background
-			surface_nc = "#fbfbfb", -- NormalNC background
+			surface_nc = "#ffffff", -- NormalNC background
 			subtle = "#f5f8fe", -- CursorLine & CursorColumn
 			border = "#c0c0c0", -- FloatBorder, Blink borders, WinSeparator/VertSplit
 			status_fg = "#e0e0e0",
@@ -385,6 +385,93 @@ function M.setup()
 		BlinkCmpMenu = { bg = colors.ui.surface, fg = colors.term.black },
 		BlinkCmpDoc = { bg = colors.ui.surface, fg = colors.term.black },
 		BlinkCmpSignatureHelp = { bg = colors.ui.surface, fg = colors.term.black },
+
+		-- neo-tree
+		NeoTreeBufferNumber = { fg = colors.term.darkgrey },
+		NeoTreeCursorLine = { fg = colors.none, bg = colors.editor.cursorline_bg },
+		NeoTreeDimText = { fg = colors.term.darkgrey },
+		NeoTreeDirectoryIcon = { fg = colors.term.darkblue },
+		NeoTreeDirectoryName = { fg = colors.term.darkblue },
+		NeoTreeDotfile = { fg = colors.term.darkgrey },
+		NeoTreeFileIcon = { fg = colors.term.black },
+		NeoTreeFileName = { fg = colors.term.black },
+		NeoTreeFileNameOpened = { fg = colors.term.black },
+		NeoTreeFilterTerm = { fg = colors.term.darkred, bold = true },
+		NeoTreeFloatBorder = { fg = colors.ui.border },
+		NeoTreeFloatTitle = { fg = colors.term.darkblue, bold = true },
+		NeoTreeTitleBar = { fg = colors.term.darkblue, bold = true },
+		NeoTreeGitAdded = { fg = colors.term.darkgreen },
+		NeoTreeGitConflict = { fg = colors.term.darkred },
+		NeoTreeGitDeleted = { fg = colors.term.darkred },
+		NeoTreeGitIgnored = { fg = colors.term.darkgrey },
+		NeoTreeGitModified = { fg = colors.term.darkblue },
+		NeoTreeGitUnstaged = { fg = colors.term.lightorange },
+		NeoTreeGitUntracked = { fg = colors.term.darkgreen },
+		NeoTreeGitStaged = { fg = colors.term.lightgreen },
+		NeoTreeHiddenByName = { fg = colors.term.darkgrey },
+		NeoTreeIgnored = { fg = colors.term.darkgrey },
+		NeoTreeIndentMarker = { fg = colors.ui.border },
+		NeoTreeExpander = { fg = colors.term.darkgrey },
+		NeoTreeNormal = { fg = colors.term.black, bg = colors.ui.surface },
+		NeoTreeNormalNC = { fg = colors.term.black, bg = colors.ui.surface_nc },
+		NeoTreeSignColumn = { fg = colors.term.black, bg = colors.ui.surface },
+		NeoTreeStats = { fg = colors.term.darkgrey },
+		NeoTreeStatsHeader = { fg = colors.term.darkgrey, bold = true },
+		NeoTreeStatusLine = { fg = colors.ui.status_fg, bg = colors.ui.status_bg, bold = false },
+		NeoTreeStatusLineNC = { fg = colors.ui.status_fg, bg = colors.ui.status_bg, bold = false },
+		NeoTreeVertSplit = { fg = colors.ui.border },
+		NeoTreeWinSeparator = { fg = colors.ui.border },
+		NeoTreeEndOfBuffer = { fg = colors.editor.eob_fg },
+		NeoTreeRootName = { fg = colors.term.darkblue, bold = true },
+		NeoTreeSymbolicLinkTarget = { fg = colors.term.darkcyan },
+		NeoTreeWindowsHidden = { fg = colors.term.darkgrey },
+
+		-- NeoTreeFloatTitle         Used for the title text of pop-ups when the border-style
+		-- NeoTreeBufferNumber       The buffer number shown in the buffers source.
+		-- NeoTreeCursorLine         |hl-CursorLine| override in Neo-tree window.
+		-- NeoTreeDimText            Greyed out text used in various places.
+		-- NeoTreeDirectoryIcon      Directory icon.
+		-- NeoTreeDirectoryName      Directory name.
+		-- NeoTreeDotfile            Used for icons and names when dotfiles are filtered.
+		-- NeoTreeFileIcon           File icon, when not overridden by devicons.
+		-- NeoTreeFileName           File name, when not overwritten by another status.
+		-- NeoTreeFileNameOpened     File name when the file is open. Not used yet.
+		-- NeoTreeFilterTerm         The filter term, as displayed in the root node.
+		-- NeoTreeFloatBorder        The border for pop-up windows.
+		-- NeoTreeFloatTitle         Used for the title text of pop-ups when the border-style
+		--                           is set to another style than "NC". This is derived
+		--                           from NeoTreeFloatBorder.
+		-- NeoTreeTitleBar           Used for the title bar of pop-ups, when the border-style
+		--                           is set to "NC". This is derived from NeoTreeFloatBorder.
+		-- NeoTreeGitAdded           File name when the git status is added.
+		-- NeoTreeGitConflict        File name when the git status is conflict.
+		-- NeoTreeGitDeleted         File name when the git status is deleted.
+		-- NeoTreeGitIgnored         File name when the git status is ignored.
+		-- NeoTreeGitModified        File name when the git status is modified.
+		-- NeoTreeGitUnstaged        Used for git unstaged symbol.
+		-- NeoTreeGitUntracked       File name when the git status is untracked.
+		-- NeoTreeGitStaged          Used for git staged symbol.
+		-- NeoTreeHiddenByName       Used for icons and names when `hide_by_name` is used.
+		-- NeoTreeIgnored            File name when the file is ignored by a
+		--                           `.neotreeignore` or similar
+		-- NeoTreeIndentMarker       The style of indentation markers (guides). By default,
+		--                           the "Normal" highlight is used.
+		-- NeoTreeExpander           Used for collapsed/expanded icons.
+		-- NeoTreeNormal             |hl-Normal| override in Neo-tree window.
+		-- NeoTreeNormalNC           |hl-NormalNC| override in Neo-tree window.
+		-- NeoTreeSignColumn         |hl-SignColumn| override in Neo-tree window.
+		-- NeoTreeStats              Used for "stat" columns like size, last modified, etc.
+		-- NeoTreeStatsHeader        Used for the header (top line) of the above columns.
+		-- NeoTreeStatusLine         |hl-StatusLine| override in Neo-tree window.
+		-- NeoTreeStatusLineNC       |hl-StatusLineNC| override in Neo-tree window.
+		-- NeoTreeVertSplit          |hl-VertSplit| override in Neo-tree window.
+		-- NeoTreeWinSeparator       |hl-WinSeparator| override in Neo-tree window.
+		-- NeoTreeEndOfBuffer        |hl-EndOfBuffer| override in Neo-tree window.
+		-- NeoTreeRootName           The name of the root node.
+		-- NeoTreeSymbolicLinkTarget Symbolic link target.
+		-- NeoTreeTitleBar           Used for the title bar of pop-ups, when the border-style
+		--                           is set to "NC". This is derived from NeoTreeFloatBorder.
+		-- NeoTreeWindowsHidden      Used for icons and names that are hidden on Windows.
 	}
 
 	-- Apply groups
