@@ -49,13 +49,13 @@ function M.setup()
 			surface = "#ffffff", -- NormalFloat / Pmenu background
 			surface_nc = "#ffffff", -- NormalNC background
 			subtle = "#f5f8fe", -- CursorLine & CursorColumn
-			border = "#c0c0c0", -- FloatBorder, Blink borders, WinSeparator/VertSplit
+			border = "#d4d4d4", -- FloatBorder, Blink borders, WinSeparator/VertSplit
 			status_fg = "#e0e0e0",
 			status_bg = "#005f87",
 			wildmenu_fg = "#444444",
 			wildmenu_bg = "#d0d0d0",
-			selection_fg = "#000000", -- Visual
-			selection_bg = "#d5e1ff",
+			selection_fg = "none",
+			selection_bg = "#a6d2ff",
 		},
 
 		--------------------------------------------------------------------------
@@ -104,83 +104,123 @@ function M.setup()
 			info = "#0000ff",
 			hint = "#00ff00",
 		},
+
+		jet = {
+			text = "#080808",
+			keyword = "#0033b3",
+			string = "#067d17",
+			number = "#1750eb",
+			comment = "#8c8c8c",
+			constant = "#871094",
+			func = "#00627a",
+			attr = "#174ad4",
+		},
 	}
 
 	---------------------------------------------------------------------------
 	-- UI & Editor highlight groups
 	---------------------------------------------------------------------------
 	local common = {
-		-- Core surfaces / borders
-		Normal = { fg = colors.term.black },
-		NormalFloat = { bg = colors.ui.surface },
-		NormalNC = { bg = colors.ui.surface_nc },
-		FloatBorder = { fg = colors.ui.border, bg = colors.none },
-		FloatTitle = { fg = colors.term.darkblue, bold = true },
-		FloatFooter = { fg = colors.term.darkblue, bold = true },
-		WinSeparator = { fg = colors.ui.border },
-		VertSplit = { fg = colors.ui.border },
+		---------------------------------------------------------------------------
+		-- Core surfaces / layout (JetBrains-like)
+		---------------------------------------------------------------------------
+		Normal = { fg = colors.jet.text, bg = colors.ui.surface },
+		NormalNC = { fg = colors.jet.text, bg = colors.ui.surface_nc },
+		MsgArea = { fg = colors.jet.text, bg = colors.ui.surface },
 
-		-- Cursor / line/column
+		-- Gutters (JetBrains light has a subtle gutter; keep it almost-white)
+		SignColumn = { fg = colors.none, bg = colors.ui.surface },
+		FoldColumn = { fg = "#aeb3c2", bg = colors.ui.surface },
+		LineNr = { fg = "#aeb3c2", bg = colors.ui.surface },
+		LineNrAbove = { fg = "#aeb3c2", bg = colors.ui.surface },
+		LineNrBelow = { fg = "#aeb3c2", bg = colors.ui.surface },
+		CursorLineNr = { fg = "#767a8a", bg = colors.editor.cursorline_bg },
+
+		-- Splits / separators
+		WinSeparator = { fg = colors.ui.border, bg = colors.none },
+		VertSplit = { fg = colors.ui.border, bg = colors.none },
+
+		-- Non-text / end-of-buffer
+		NonText = { fg = "#c6c6c6", bg = colors.none },
+		EndOfBuffer = { fg = colors.ui.surface, bg = colors.ui.surface },
+
+		---------------------------------------------------------------------------
+		-- Floating windows / popups (JetBrains-like)
+		---------------------------------------------------------------------------
+		NormalFloat = { fg = colors.jet.text, bg = colors.ui.surface },
+		FloatBorder = { fg = colors.ui.border, bg = colors.ui.surface },
+		FloatTitle = { fg = colors.jet.keyword, bg = colors.ui.surface, bold = false },
+		FloatFooter = { fg = colors.jet.keyword, bg = colors.ui.surface, bold = false },
+
+		---------------------------------------------------------------------------
+		-- Cursor / line & column highlights
+		---------------------------------------------------------------------------
 		Cursor = { reverse = true },
 		iCursor = { reverse = true },
 		lCursor = { reverse = true },
 		vCursor = { reverse = true },
+
 		CursorLine = { fg = colors.none, bg = colors.editor.cursorline_bg },
 		CursorColumn = { fg = colors.none, bg = colors.editor.cursorcolumn_bg },
-		CursorLineNr = { fg = colors.term.darkgrey, bg = colors.editor.cursorline_bg },
 
-		-- Numbers & non-text
-		LineNr = { fg = colors.term.lightgrey },
-		LineNrAbove = { fg = colors.term.lightgrey },
-		LineNrBelow = { fg = colors.term.lightgrey },
-		NonText = { fg = colors.term.darkgrey },
-		EndOfBuffer = { fg = colors.editor.eob_fg },
+		---------------------------------------------------------------------------
+		-- Menus (completion, wildmenu)
+		---------------------------------------------------------------------------
+		Pmenu = { fg = colors.jet.text, bg = colors.ui.surface },
+		PmenuSel = { fg = colors.none, bg = colors.ui.selection_bg },
+		PmenuSbar = { bg = "#e6e6e6" },
+		PmenuThumb = { bg = "#c8c8c8" },
+		WildMenu = { fg = colors.jet.text, bg = "#e9eefc", bold = false },
 
-		-- Menus / popups
-		Pmenu = { fg = colors.term.black, bg = colors.ui.surface },
-		PmenuSel = { link = "Visual" },
-		PmenuSbar = { bg = colors.term.lightgrey },
-		PmenuThumb = { bg = colors.term.darkgrey },
-		WildMenu = { fg = colors.ui.wildmenu_fg, bg = colors.ui.wildmenu_bg, bold = true },
-
+		---------------------------------------------------------------------------
 		-- Visual selection
-		Visual = { fg = colors.ui.selection_fg, bg = colors.ui.selection_bg },
-		VisualNOS = { fg = colors.ui.selection_fg, bg = colors.term.lightgrey },
+		---------------------------------------------------------------------------
+		Visual = { fg = colors.none, bg = colors.ui.selection_bg },
+		VisualNOS = { fg = colors.none, bg = "#e7effd" },
 
-		-- Statusline / Tabline
-		StatusLine = { fg = colors.ui.status_fg, bg = colors.ui.status_bg, bold = false },
-		StatusLineNC = { fg = colors.ui.status_fg, bg = colors.ui.status_bg, bold = false },
-		TabLine = { fg = colors.ui.status_fg, bg = colors.ui.status_bg },
-		TabLineFill = { fg = colors.ui.status_fg, bg = colors.ui.status_bg },
-		TabLineSel = { fg = colors.ui.status_bg, bg = colors.ui.status_fg },
+		---------------------------------------------------------------------------
+		-- Statusline / Tabline (more IDE-like: light neutral bar)
+		---------------------------------------------------------------------------
+		StatusLine = { fg = colors.jet.text, bg = "#f2f2f2", bold = false },
+		StatusLineNC = { fg = "#666666", bg = "#f2f2f2", bold = false },
 
-		-- Editor: search & substitute
+		TabLine = { fg = "#444444", bg = "#f2f2f2" },
+		TabLineFill = { fg = "#444444", bg = "#f2f2f2" },
+		TabLineSel = { fg = colors.jet.text, bg = colors.ui.surface, bold = false },
+
+		---------------------------------------------------------------------------
+		-- Search / replace (keep your tuned search colors)
+		---------------------------------------------------------------------------
 		Search = { fg = colors.editor.search_fg, bg = colors.editor.search_bg },
 		IncSearch = { fg = colors.none, bg = colors.editor.incsearch_bg },
 		CurSearch = { fg = colors.none, bg = colors.editor.cursearch_bg },
 		Substitute = { fg = colors.none, bg = colors.diff.text_bg },
 
-		-- Editor: parentheses / matching
+		---------------------------------------------------------------------------
+		-- Matching / folds
+		---------------------------------------------------------------------------
 		MatchParen = { fg = colors.editor.matchparen_fg, bg = colors.editor.matchparen_bg },
-
-		-- Editor: folds
-		FoldColumn = { fg = colors.term.lightgrey, bg = colors.none },
 		Folded = { fg = colors.editor.folded_fg, bg = colors.editor.folded_bg },
 
+		---------------------------------------------------------------------------
 		-- Misc UI
-		ColorColumn = { fg = colors.none, bg = colors.none },
-		Conceal = { fg = colors.term.lightgrey },
-		Directory = { fg = colors.term.darkblue },
-		MsgArea = { fg = colors.term.black },
+		---------------------------------------------------------------------------
+		ColorColumn = { fg = colors.none, bg = "#f5f5f5" },
+		Conceal = { fg = "#808080" },
+		Directory = { fg = colors.jet.keyword },
 		ModeMsg = { fg = colors.term.darkgreen },
 		MoreMsg = { fg = colors.term.darkgreen },
 		Question = { fg = colors.term.darkyellow },
-		QuickfixLine = { fg = colors.term.darkgreen },
-		SpecialKey = { fg = colors.term.darkmagenta },
-		WinBar = { fg = colors.term.black, bg = colors.none },
-		WinBarNC = { fg = colors.term.black, bg = colors.term.white },
+		QuickfixLine = { fg = colors.jet.text, bg = "#e7effd" },
+		SpecialKey = { fg = "#a0a0a0" },
 
-		-- Diff UI
+		-- Winbar (keep subtle, close to JetBrains breadcrumb feel)
+		WinBar = { fg = colors.jet.text, bg = colors.ui.surface },
+		WinBarNC = { fg = "#666666", bg = colors.ui.surface_nc },
+
+		---------------------------------------------------------------------------
+		-- Diff UI (KEEP AS CLOSE AS POSSIBLE TO YOUR CURRENT LOOK)
+		---------------------------------------------------------------------------
 		DiffAdd = { fg = colors.diff.add_fg, bg = colors.diff.add_bg },
 		DiffChange = { fg = colors.diff.change_fg, bg = colors.diff.change_bg },
 		DiffDelete = { fg = colors.diff.delete_fg, bg = colors.diff.delete_bg },
@@ -190,14 +230,18 @@ function M.setup()
 		DiffFile = { fg = colors.term.darkcyan },
 		DiffIndexLine = { fg = colors.term.darkgrey },
 
-		-- Blink borders (keep these for consistency with FloatBorder)
-		BlinkCmpMenuBorder = { fg = colors.ui.border },
-		BlinkCmpDocBorder = { fg = colors.ui.border },
-		BlinkCmpSignatureHelpBorder = { fg = colors.ui.border },
+		---------------------------------------------------------------------------
+		-- Blink borders (keep consistent with FloatBorder)
+		---------------------------------------------------------------------------
+		BlinkCmpMenuBorder = { fg = colors.ui.border, bg = colors.ui.surface },
+		BlinkCmpDocBorder = { fg = colors.ui.border, bg = colors.ui.surface },
+		BlinkCmpSignatureHelpBorder = { fg = colors.ui.border, bg = colors.ui.surface },
 
+		---------------------------------------------------------------------------
 		-- Messages / errors (non-LSP)
-		ErrorMsg = { fg = colors.lsp.error },
-		WarningMsg = { fg = colors.lsp.warn },
+		---------------------------------------------------------------------------
+		ErrorMsg = { fg = colors.lsp.error, bg = colors.none },
+		WarningMsg = { fg = colors.lsp.warn, bg = colors.none },
 	}
 
 	---------------------------------------------------------------------------
@@ -252,65 +296,129 @@ function M.setup()
 	---------------------------------------------------------------------------
 	-- Syntax highlight groups (kept from your original, using colors.term)
 	---------------------------------------------------------------------------
+
 	local syntax = {
-		Boolean = { fg = colors.term.darkblue, bold = true },
-		Character = { fg = colors.term.darkblue, bold = true },
-		Comment = { fg = colors.term.darkgrey, italic = true },
-		Conditional = { fg = colors.term.darkblue, bold = true },
-		Constant = { fg = colors.term.darkmagenta, italic = true, bold = true },
-		Define = { fg = colors.term.darkgrey },
-		Delimiter = { fg = colors.term.black },
+		-- Classic Vim syntax groups (JetBrains-ish)
+		Boolean = { fg = colors.jet.keyword },
+		Character = { fg = colors.jet.string },
+		Comment = { fg = colors.jet.comment, italic = true },
+		Conditional = { fg = colors.jet.keyword },
+		Constant = { fg = colors.jet.constant, italic = true },
+		Debug = { fg = colors.jet.attr },
+		Define = { fg = colors.jet.keyword },
+		Delimiter = { fg = colors.jet.text },
 		Error = { fg = colors.term.darkred },
-		Exception = { fg = colors.term.darkblue, bold = true },
-		Float = { fg = colors.term.lightblue },
-		Function = { fg = colors.term.black },
-		Identifier = { fg = colors.term.black },
-		Include = { fg = colors.term.darkblue, bold = true },
-		Keyword = { fg = colors.term.darkblue, bold = true },
-		Label = { fg = colors.term.darkblue, bold = true },
-		Macro = { fg = colors.term.darkgrey },
-		Number = { fg = colors.term.lightblue },
-		Operator = { fg = colors.term.black },
-		PreCondit = { fg = colors.term.darkgrey },
-		PreProc = { fg = colors.term.darkgrey },
-		Repeat = { fg = colors.term.darkblue, bold = true },
-		Special = { fg = colors.term.black },
-		SpecialChar = { fg = colors.term.black },
-		SpecialComment = { fg = colors.term.black },
-		Statement = { fg = colors.term.darkblue, bold = true },
-		StorageClass = { fg = colors.term.black },
-		String = { fg = colors.term.darkgreen },
-		Structure = { fg = colors.term.black },
-		Tag = { fg = colors.term.black },
-		Title = { fg = colors.term.darkcyan },
-		Type = { fg = colors.term.black },
-		Typedef = { fg = colors.term.black },
+		Exception = { fg = colors.jet.keyword },
+		Float = { fg = colors.jet.number },
+		Function = { fg = colors.jet.func },
+		Identifier = { fg = colors.jet.text },
+		Include = { fg = colors.jet.keyword },
+		Keyword = { fg = colors.jet.keyword },
+		Label = { fg = colors.jet.keyword },
+		Macro = { fg = colors.jet.keyword },
+		Number = { fg = colors.jet.number },
+		Operator = { fg = colors.jet.text },
+		PreCondit = { fg = colors.jet.keyword },
+		PreProc = { fg = colors.jet.keyword },
+		Repeat = { fg = colors.jet.keyword },
+		Special = { fg = colors.jet.attr },
+		SpecialChar = { fg = colors.jet.attr },
+		SpecialComment = { fg = colors.jet.comment, italic = true },
+		Statement = { fg = colors.jet.keyword },
+		StorageClass = { fg = colors.jet.keyword },
+		String = { fg = colors.jet.string },
+		Structure = { fg = colors.jet.keyword },
+		Tag = { fg = colors.jet.attr },
+		Title = { fg = colors.jet.keyword },
+		Todo = { fg = "#008dde", italic = true },
+		Type = { fg = colors.jet.text },
+		Typedef = { fg = colors.jet.text },
+		Underlined = { fg = colors.jet.attr, underline = true },
 
-		Debug = { fg = colors.term.black },
-		Underlined = { fg = colors.none },
-		Todo = { fg = colors.term.black, bg = colors.term.lightyellow },
-
-		["@variable"] = { link = "Normal" },
-		["@variable.builtin"] = { fg = colors.term.darkmagenta },
-		["@variable.parameter"] = { fg = colors.term.darkmagenta },
+		-- Treesitter captures (corrected to match JetBrains Light behavior)
+		["@comment"] = { link = "Comment" },
+		["@comment.documentation"] = { fg = colors.jet.comment, italic = true },
 
 		["@string"] = { link = "String" },
-		["@string.documentation"] = { link = "Comment" },
+		["@string.documentation"] = { fg = colors.jet.comment, italic = true },
+		["@string.escape"] = { fg = colors.jet.attr },
+		["@string.special"] = { fg = colors.jet.attr },
 
-		["@boolean"] = { fg = colors.term.darkblue, bold = true },
+		["@number"] = { link = "Number" },
+		["@number.float"] = { link = "Float" },
+		["@boolean"] = { link = "Boolean" },
 
-		["@attribute"] = { fg = "#9e880d" },
-		["@attribute.builtin"] = { fg = "#9e880d" },
+		-- Identifiers
+		["@variable"] = { fg = colors.jet.text },
+		["@variable.builtin"] = { fg = colors.jet.constant },
+		["@variable.parameter"] = { fg = colors.jet.text },
+		["@parameter"] = { fg = colors.jet.text },
 
-		["@function"] = { fg = "#00627a" },
-		["@function.call"] = { link = "Function" },
-		["@function.builtin"] = { fg = colors.term.darkmagenta },
-		["@function.method"] = { fg = "#00627a" },
-		["@function.method.call"] = { link = "Function" },
+		-- members/fields in JetBrains are often emphasized (purple/italic fits your icls constant color)
+		["@variable.member"] = { fg = colors.jet.text },
+		["@property"] = { fg = colors.jet.constant, italic = true },
+		["@field"] = { fg = colors.jet.constant, italic = true },
 
-		["@keyword.import"] = { fg = colors.term.darkblue, bold = true },
+		["@constant"] = { link = "Constant" },
+		["@constant.builtin"] = { fg = colors.jet.constant, italic = true },
+		["@constant.macro"] = { fg = colors.jet.constant, italic = true },
 
-		["@comment"] = { link = "Comment" },
+		-- Functions
+		["@function"] = { fg = colors.jet.func },
+		["@function.builtin"] = { fg = colors.jet.func },
+		-- JetBrains highlights declarations more than calls; calls can be normal text
+		["@function.call"] = { fg = colors.jet.text },
+
+		-- Keep your original method capture names
+		["@function.method"] = { fg = colors.jet.func },
+		["@function.method.call"] = { fg = colors.jet.text },
+
+		-- Also include newer aliases used by many parsers/queries
+		["@method"] = { fg = colors.jet.func },
+		["@method.call"] = { fg = colors.jet.text },
+		["@constructor"] = { fg = colors.jet.func },
+
+		-- FIX: imports — only keywords blue; modules/names normal
+		["@keyword"] = { fg = colors.jet.keyword },
+		["@keyword.import"] = { fg = colors.jet.keyword }, -- import/from
+		["@keyword.operator"] = { fg = colors.jet.keyword }, -- "as" often lands here (python)
+		["@keyword.return"] = { fg = colors.jet.keyword },
+		["@keyword.conditional"] = { fg = colors.jet.keyword },
+		["@keyword.repeat"] = { fg = colors.jet.keyword },
+		["@keyword.exception"] = { fg = colors.jet.keyword },
+		["@keyword.function"] = { fg = colors.jet.keyword },
+
+		-- These often represent the imported libs / namespaces
+		["@module"] = { fg = colors.jet.text },
+		["@namespace"] = { fg = colors.jet.text },
+
+		["@operator"] = { link = "Operator" },
+		["@punctuation.delimiter"] = { fg = colors.jet.text },
+		["@punctuation.bracket"] = { fg = colors.jet.text },
+		["@punctuation.special"] = { fg = colors.jet.attr },
+
+		["@type"] = { fg = colors.jet.text },
+		["@type.builtin"] = { fg = colors.jet.keyword },
+		["@type.definition"] = { fg = colors.jet.text },
+
+		-- Attributes / decorators / annotations
+		["@attribute"] = { fg = colors.jet.attr },
+		["@attribute.builtin"] = { fg = colors.jet.attr },
+		["@annotation"] = { fg = colors.jet.attr },
+		["@decorator"] = { fg = colors.jet.attr },
+
+		-- Markup (safe extras)
+		["@markup.underline"] = { link = "Underlined" },
+		["@markup.link"] = { fg = colors.jet.attr, underline = true },
+		["@markup.link.url"] = { fg = colors.jet.attr, underline = true },
+		["@markup.raw"] = { fg = colors.jet.string },
+
+		-- Tags (HTML/JSX)
+		["@tag"] = { fg = colors.jet.attr },
+		["@tag.attribute"] = { fg = colors.jet.constant, italic = true },
+		["@tag.delimiter"] = { fg = colors.jet.text },
+
+		["@error"] = { fg = colors.term.darkred },
 	}
 
 	---------------------------------------------------------------------------
@@ -386,92 +494,31 @@ function M.setup()
 		BlinkCmpDoc = { bg = colors.ui.surface, fg = colors.term.black },
 		BlinkCmpSignatureHelp = { bg = colors.ui.surface, fg = colors.term.black },
 
-		-- neo-tree
-		NeoTreeBufferNumber = { fg = colors.term.darkgrey },
-		NeoTreeCursorLine = { fg = colors.none, bg = colors.editor.cursorline_bg },
-		NeoTreeDimText = { fg = colors.term.darkgrey },
-		NeoTreeDirectoryIcon = { fg = colors.term.darkblue },
-		NeoTreeDirectoryName = { fg = colors.term.darkblue },
-		NeoTreeDotfile = { fg = colors.term.darkgrey },
-		NeoTreeFileIcon = { fg = colors.term.black },
-		NeoTreeFileName = { fg = colors.term.black },
-		NeoTreeFileNameOpened = { fg = colors.term.black },
-		NeoTreeFilterTerm = { fg = colors.term.darkred, bold = true },
-		NeoTreeFloatBorder = { fg = colors.ui.border },
-		NeoTreeFloatTitle = { fg = colors.term.darkblue, bold = true },
-		NeoTreeTitleBar = { fg = colors.term.darkblue, bold = true },
-		NeoTreeGitAdded = { fg = colors.term.darkgreen },
-		NeoTreeGitConflict = { fg = colors.term.darkred },
-		NeoTreeGitDeleted = { fg = colors.term.darkred },
-		NeoTreeGitIgnored = { fg = colors.term.darkgrey },
-		NeoTreeGitModified = { fg = colors.term.darkblue },
-		NeoTreeGitUnstaged = { fg = colors.term.lightorange },
-		NeoTreeGitUntracked = { fg = colors.term.darkgreen },
-		NeoTreeGitStaged = { fg = colors.term.lightgreen },
-		NeoTreeHiddenByName = { fg = colors.term.darkgrey },
-		NeoTreeIgnored = { fg = colors.term.darkgrey },
-		NeoTreeIndentMarker = { fg = colors.ui.border },
-		NeoTreeExpander = { fg = colors.term.darkgrey },
-		NeoTreeNormal = { fg = colors.term.black, bg = colors.ui.surface },
-		NeoTreeNormalNC = { fg = colors.term.black, bg = colors.ui.surface_nc },
-		NeoTreeSignColumn = { fg = colors.term.black, bg = colors.ui.surface },
-		NeoTreeStats = { fg = colors.term.darkgrey },
-		NeoTreeStatsHeader = { fg = colors.term.darkgrey, bold = true },
-		NeoTreeStatusLine = { fg = colors.ui.status_fg, bg = colors.ui.status_bg, bold = false },
-		NeoTreeStatusLineNC = { fg = colors.ui.status_fg, bg = colors.ui.status_bg, bold = false },
-		NeoTreeVertSplit = { fg = colors.ui.border },
-		NeoTreeWinSeparator = { fg = colors.ui.border },
-		NeoTreeEndOfBuffer = { fg = colors.editor.eob_fg },
-		NeoTreeRootName = { fg = colors.term.darkblue, bold = true },
-		NeoTreeSymbolicLinkTarget = { fg = colors.term.darkcyan },
-		NeoTreeWindowsHidden = { fg = colors.term.darkgrey },
+		-- Neo-tree (icons gray, names black; changed/modified names dark blue)
+		NeoTreeDirectoryIcon = { fg = colors.jet.comment },
+		NeoTreeFileIcon = { fg = colors.jet.comment },
+		NeoTreeDotfile = { fg = colors.jet.comment },
+		NeoTreeExpander = { fg = colors.jet.comment },
 
-		-- NeoTreeFloatTitle         Used for the title text of pop-ups when the border-style
-		-- NeoTreeBufferNumber       The buffer number shown in the buffers source.
-		-- NeoTreeCursorLine         |hl-CursorLine| override in Neo-tree window.
-		-- NeoTreeDimText            Greyed out text used in various places.
-		-- NeoTreeDirectoryIcon      Directory icon.
-		-- NeoTreeDirectoryName      Directory name.
-		-- NeoTreeDotfile            Used for icons and names when dotfiles are filtered.
-		-- NeoTreeFileIcon           File icon, when not overridden by devicons.
-		-- NeoTreeFileName           File name, when not overwritten by another status.
-		-- NeoTreeFileNameOpened     File name when the file is open. Not used yet.
-		-- NeoTreeFilterTerm         The filter term, as displayed in the root node.
-		-- NeoTreeFloatBorder        The border for pop-up windows.
-		-- NeoTreeFloatTitle         Used for the title text of pop-ups when the border-style
-		--                           is set to another style than "NC". This is derived
-		--                           from NeoTreeFloatBorder.
-		-- NeoTreeTitleBar           Used for the title bar of pop-ups, when the border-style
-		--                           is set to "NC". This is derived from NeoTreeFloatBorder.
-		-- NeoTreeGitAdded           File name when the git status is added.
-		-- NeoTreeGitConflict        File name when the git status is conflict.
-		-- NeoTreeGitDeleted         File name when the git status is deleted.
-		-- NeoTreeGitIgnored         File name when the git status is ignored.
-		-- NeoTreeGitModified        File name when the git status is modified.
-		-- NeoTreeGitUnstaged        Used for git unstaged symbol.
-		-- NeoTreeGitUntracked       File name when the git status is untracked.
-		-- NeoTreeGitStaged          Used for git staged symbol.
-		-- NeoTreeHiddenByName       Used for icons and names when `hide_by_name` is used.
-		-- NeoTreeIgnored            File name when the file is ignored by a
-		--                           `.neotreeignore` or similar
-		-- NeoTreeIndentMarker       The style of indentation markers (guides). By default,
-		--                           the "Normal" highlight is used.
-		-- NeoTreeExpander           Used for collapsed/expanded icons.
-		-- NeoTreeNormal             |hl-Normal| override in Neo-tree window.
-		-- NeoTreeNormalNC           |hl-NormalNC| override in Neo-tree window.
-		-- NeoTreeSignColumn         |hl-SignColumn| override in Neo-tree window.
-		-- NeoTreeStats              Used for "stat" columns like size, last modified, etc.
-		-- NeoTreeStatsHeader        Used for the header (top line) of the above columns.
-		-- NeoTreeStatusLine         |hl-StatusLine| override in Neo-tree window.
-		-- NeoTreeStatusLineNC       |hl-StatusLineNC| override in Neo-tree window.
-		-- NeoTreeVertSplit          |hl-VertSplit| override in Neo-tree window.
-		-- NeoTreeWinSeparator       |hl-WinSeparator| override in Neo-tree window.
-		-- NeoTreeEndOfBuffer        |hl-EndOfBuffer| override in Neo-tree window.
-		-- NeoTreeRootName           The name of the root node.
-		-- NeoTreeSymbolicLinkTarget Symbolic link target.
-		-- NeoTreeTitleBar           Used for the title bar of pop-ups, when the border-style
-		--                           is set to "NC". This is derived from NeoTreeFloatBorder.
-		-- NeoTreeWindowsHidden      Used for icons and names that are hidden on Windows.
+		NeoTreeDirectoryName = { fg = colors.jet.text },
+		NeoTreeFileName = { fg = colors.jet.text },
+		NeoTreeRootName = { fg = colors.jet.text },
+		NeoTreeSymbolicLinkTarget = { fg = colors.jet.text },
+
+		-- Git status names (treat any “changed” state as dark blue)
+		NeoTreeGitModified = { fg = colors.jet.keyword },
+		NeoTreeGitUntracked = { fg = colors.jet.keyword },
+		NeoTreeGitAdded = { fg = colors.jet.keyword },
+		NeoTreeGitDeleted = { fg = colors.jet.keyword },
+		NeoTreeGitStaged = { fg = colors.jet.keyword },
+		NeoTreeGitConflict = { fg = colors.jet.keyword },
+
+		-- Keep ignored/hidden dimmed
+		NeoTreeGitIgnored = { fg = colors.jet.comment },
+		NeoTreeHiddenByName = { fg = colors.jet.comment },
+		NeoTreeIgnored = { fg = colors.jet.comment },
+
+		WhichKeyNormal = { bg = colors.ui.surface_nc },
 	}
 
 	-- Apply groups
