@@ -331,23 +331,10 @@ function M.setup()
 		Tag = { fg = colors.jet.attr },
 		Title = { fg = colors.jet.keyword },
 		Todo = { fg = "#008dde", italic = true },
-		Type = { fg = colors.jet.keyword },
-		Typedef = { fg = colors.jet.keyword },
+		Type = { fg = colors.jet.text },
+		Typedef = { fg = colors.jet.text },
 		Underlined = { fg = colors.jet.attr, underline = true },
 
-		-- ["@variable"] = { fg = colors.jet.text },
-		-- ["@variable.builtin"] = { fg = colors.jet.constant },
-		-- ["@variable.parameter"] = { fg = colors.jet.constant },
-		-- ["@string"] = { link = "String" },
-		-- ["@string.documentation"] = { link = "Comment" },
-		-- ["@boolean"] = { link = "Boolean" },
-		-- ["@attribute"] = { fg = "#9e880d" },
-		-- ["@attribute.builtin"] = { fg = "#9e880d" },
-		-- ["@function"] = { fg = colors.jet.func },
-		-- ["@function.builtin"] = { fg = colors.jet.constant },
-		--
-		--
-		--
 		-- Treesitter captures (corrected to match JetBrains Light behavior)
 		["@comment"] = { link = "Comment" },
 		["@comment.documentation"] = { fg = colors.jet.comment, italic = true },
@@ -368,7 +355,7 @@ function M.setup()
 		["@parameter"] = { fg = colors.jet.text },
 
 		-- members/fields in JetBrains are often emphasized (purple/italic fits your icls constant color)
-		["@variable.member"] = { fg = colors.jet.constant, italic = true },
+		["@variable.member"] = { fg = colors.jet.text },
 		["@property"] = { fg = colors.jet.constant, italic = true },
 		["@field"] = { fg = colors.jet.constant, italic = true },
 
@@ -410,7 +397,7 @@ function M.setup()
 		["@punctuation.bracket"] = { fg = colors.jet.text },
 		["@punctuation.special"] = { fg = colors.jet.attr },
 
-		["@type"] = { fg = colors.jet.keyword },
+		["@type"] = { fg = colors.jet.text },
 		["@type.builtin"] = { fg = colors.jet.keyword },
 		["@type.definition"] = { fg = colors.jet.text },
 
@@ -506,6 +493,32 @@ function M.setup()
 		BlinkCmpMenu = { bg = colors.ui.surface, fg = colors.term.black },
 		BlinkCmpDoc = { bg = colors.ui.surface, fg = colors.term.black },
 		BlinkCmpSignatureHelp = { bg = colors.ui.surface, fg = colors.term.black },
+
+		-- Neo-tree (icons gray, names black; changed/modified names dark blue)
+		NeoTreeDirectoryIcon = { fg = colors.jet.comment },
+		NeoTreeFileIcon = { fg = colors.jet.comment },
+		NeoTreeDotfile = { fg = colors.jet.comment },
+		NeoTreeExpander = { fg = colors.jet.comment },
+
+		NeoTreeDirectoryName = { fg = colors.jet.text },
+		NeoTreeFileName = { fg = colors.jet.text },
+		NeoTreeRootName = { fg = colors.jet.text },
+		NeoTreeSymbolicLinkTarget = { fg = colors.jet.text },
+
+		-- Git status names (treat any “changed” state as dark blue)
+		NeoTreeGitModified = { fg = colors.jet.keyword },
+		NeoTreeGitUntracked = { fg = colors.jet.keyword },
+		NeoTreeGitAdded = { fg = colors.jet.keyword },
+		NeoTreeGitDeleted = { fg = colors.jet.keyword },
+		NeoTreeGitStaged = { fg = colors.jet.keyword },
+		NeoTreeGitConflict = { fg = colors.jet.keyword },
+
+		-- Keep ignored/hidden dimmed
+		NeoTreeGitIgnored = { fg = colors.jet.comment },
+		NeoTreeHiddenByName = { fg = colors.jet.comment },
+		NeoTreeIgnored = { fg = colors.jet.comment },
+
+		WhichKeyNormal = { bg = colors.ui.surface_nc },
 	}
 
 	-- Apply groups
