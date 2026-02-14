@@ -296,6 +296,7 @@ function M.setup()
 	---------------------------------------------------------------------------
 	-- Syntax highlight groups (kept from your original, using colors.term)
 	---------------------------------------------------------------------------
+
 	local syntax = {
 		-- Classic Vim syntax groups (JetBrains-ish)
 		Boolean = { fg = colors.jet.keyword },
@@ -329,17 +330,31 @@ function M.setup()
 		Structure = { fg = colors.jet.keyword },
 		Tag = { fg = colors.jet.attr },
 		Title = { fg = colors.jet.keyword },
-		Todo = { fg = colors.jet.keyword, italic = true },
+		Todo = { fg = "#008dde", italic = true },
 		Type = { fg = colors.jet.keyword },
 		Typedef = { fg = colors.jet.keyword },
 		Underlined = { fg = colors.jet.attr, underline = true },
 
-		-- Treesitter captures (your originals + commonly-missed ones)
+		-- ["@variable"] = { fg = colors.jet.text },
+		-- ["@variable.builtin"] = { fg = colors.jet.constant },
+		-- ["@variable.parameter"] = { fg = colors.jet.constant },
+		-- ["@string"] = { link = "String" },
+		-- ["@string.documentation"] = { link = "Comment" },
+		-- ["@boolean"] = { link = "Boolean" },
+		-- ["@attribute"] = { fg = "#9e880d" },
+		-- ["@attribute.builtin"] = { fg = "#9e880d" },
+		-- ["@function"] = { fg = colors.jet.func },
+		-- ["@function.builtin"] = { fg = colors.jet.constant },
+		--
+		--
+		--
+		-- Treesitter captures (corrected to match JetBrains Light behavior)
 		["@comment"] = { link = "Comment" },
 		["@comment.documentation"] = { fg = colors.jet.comment, italic = true },
 
 		["@string"] = { link = "String" },
-		["@string.documentation"] = { fg = colors.jet.string, italic = true },
+		-- FIX: docstrings/doc text are grey in PyCharm Light (DEFAULT_DOC_COMMENT)
+		["@string.documentation"] = { fg = colors.jet.comment, italic = true },
 		["@string.escape"] = { fg = colors.jet.attr },
 		["@string.special"] = { fg = colors.jet.attr },
 
@@ -347,20 +362,30 @@ function M.setup()
 		["@number.float"] = { link = "Float" },
 		["@boolean"] = { link = "Boolean" },
 
+		-- Identifiers
 		["@variable"] = { fg = colors.jet.text },
 		["@variable.builtin"] = { fg = colors.jet.constant, italic = true },
-		["@variable.parameter"] = { fg = colors.jet.constant, italic = true },
+
+		-- FIX: parameters in function definitions should look like normal text (PyCharm Light)
+		["@variable.parameter"] = { fg = colors.jet.text },
+		["@parameter"] = { fg = colors.jet.text },
+
+		-- members/fields in JetBrains are often emphasized (purple/italic fits your icls constant color)
 		["@variable.member"] = { fg = colors.jet.constant, italic = true },
+		["@property"] = { fg = colors.jet.constant, italic = true },
+		["@field"] = { fg = colors.jet.constant, italic = true },
 
 		["@constant"] = { link = "Constant" },
 		["@constant.builtin"] = { fg = colors.jet.constant, italic = true },
 		["@constant.macro"] = { fg = colors.jet.constant, italic = true },
 
+		-- Functions
 		["@function"] = { fg = colors.jet.func },
 		["@function.builtin"] = { fg = colors.jet.func },
+		-- JetBrains highlights declarations more than calls; calls can be normal text
 		["@function.call"] = { fg = colors.jet.text },
 
-		-- Keep your original method capture names (you had these)
+		-- Keep your original method capture names
 		["@function.method"] = { fg = colors.jet.func },
 		["@function.method.call"] = { fg = colors.jet.text },
 
@@ -369,14 +394,19 @@ function M.setup()
 		["@method.call"] = { fg = colors.jet.text },
 		["@constructor"] = { fg = colors.jet.func },
 
+		-- FIX: imports — only keywords blue; modules/names normal
 		["@keyword"] = { fg = colors.jet.keyword },
-		["@keyword.import"] = { fg = colors.jet.keyword }, -- you had this
+		["@keyword.import"] = { fg = colors.jet.keyword }, -- import/from
+		["@keyword.operator"] = { fg = colors.jet.keyword }, -- "as" often lands here (python)
 		["@keyword.return"] = { fg = colors.jet.keyword },
-		["@keyword.operator"] = { fg = colors.jet.keyword },
 		["@keyword.conditional"] = { fg = colors.jet.keyword },
 		["@keyword.repeat"] = { fg = colors.jet.keyword },
 		["@keyword.exception"] = { fg = colors.jet.keyword },
 		["@keyword.function"] = { fg = colors.jet.keyword },
+
+		-- These often represent the imported libs / namespaces
+		["@module"] = { fg = colors.jet.text },
+		["@namespace"] = { fg = colors.jet.text },
 
 		["@operator"] = { link = "Operator" },
 		["@punctuation.delimiter"] = { fg = colors.jet.text },
@@ -387,10 +417,7 @@ function M.setup()
 		["@type.builtin"] = { fg = colors.jet.keyword },
 		["@type.definition"] = { fg = colors.jet.keyword },
 
-		["@property"] = { fg = colors.jet.constant, italic = true },
-		["@field"] = { fg = colors.jet.constant, italic = true },
-
-		-- Attributes / decorators / annotations (you had @attribute + @attribute.builtin)
+		-- Attributes / decorators / annotations
 		["@attribute"] = { fg = colors.jet.attr },
 		["@attribute.builtin"] = { fg = colors.jet.attr },
 		["@annotation"] = { fg = colors.jet.attr },
