@@ -2,7 +2,8 @@
 
 This is a light color scheme for Neovim, inspired by the IntelliJ Light theme, made in Lua. It aims to provide a clean and readable interface with a focus on syntax highlighting and usability.
 
-![screenshot](./resources/screenshot.png)
+| ![screenshot](./resources/screenshot.png) |
+| ----------------------------------------- |
 
 Currently it supports:
 
