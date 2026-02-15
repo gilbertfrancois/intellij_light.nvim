@@ -1,6 +1,9 @@
 # NVIM color scheme, inspired by IntelliJ Light theme
 
 This is a light color scheme for Neovim, inspired by the IntelliJ Light theme, made in Lua. It aims to provide a clean and readable interface with a focus on syntax highlighting and usability.
+
+<div text-align="center"><img src="resources/screenshot.png" width="50%"/></div>
+
 Currently it supports:
 
 - Treesitter syntax highlighting
